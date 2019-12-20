@@ -1,0 +1,131 @@
+\documentclass[a4paper,12pt]{article}
+\setlength{\parskip}{1em}
+\setlength{\parindent}{0pt}
+
+\usepackage{caption}
+\usepackage{textcomp}
+\usepackage{listings}
+\usepackage[english]{babel}
+\usepackage[bottom]{footmisc}
+\usepackage{amsfonts}
+\usepackage{hyperref}
+
+\usepackage{titling}
+\newcommand{\subtitle}[1]{%
+  \posttitle{%
+    \par\end{center}
+    \begin{center}\large#1\end{center}
+    \vskip0.5em}%
+}
+
+\title{\textbf{EcoNav}}
+\subtitle{Design document}
+\author{Antoine Gagnon}
+\date{\today}
+
+\begin{document}
+
+\clearpage\maketitle
+\thispagestyle{empty}
+
+\pagebreak
+
+\tableofcontents
+
+\pagebreak
+
+\section{Overview}
+
+\subsection{Goal}
+
+The main goal of EcoNav is to give tips to drivers based on their driving habits to improve their fuel usage.
+
+\subsection{Method}
+
+In order to record users driving habits, EcoNav requires a small device such as a Raspberry Pi to act as a server and gather data from the ODB2 port of the vehicule via a scanner (wired or bluetooth) and video footage from a Raspberry Pi camera. The acting server could then stream live data to a smartphone or any other network enabled device as well as run analysis on the data. 
+
+
+\pagebreak
+
+\section{Features}
+
+\subsection{EcoNav Score}
+The EcoNav score is a metric to measure the fuel efficiency of the user based on their driving habits. This score comes as a mark (A+, A, etc.) and is throughly explained to the user.
+
+\subsection{Real-time analysis}
+Live readings from the system and how it affects their fuel consumption are be made available to the user, streaming it to a smartphone attached on the dash of their car.
+
+\subsection{Trip overview}
+Each trip is archived and exports are made available via the EcoNav application highlighting user actions that affected their fuel economy and footage of what happened at the time as well as providing raw data, statistics and an EcoNav score.
+
+\subsection{Lifetime overview}
+Exports are also be available from data over the whole lifetime of the application. Enabling users to see changes over time.
+
+\pagebreak
+
+\section{Technical design}
+\subsection{Hardware}
+
+\subsubsection{Data collection}
+\textbf{Car data}
+	
+	The car data is read from an ODBII port scanner, more specifically an ELM 327 mini, over bluetooth and stored on the Raspberry Pi SD Card.
+	
+	
+\textbf{Video footage}
+	
+Using a Camera module on the Raspberry Pi mounted on the dash
+
+\subsubsection{Live monitoring and feedback}
+Live data and feedback is streamed directly to the user's smartphone mounted on the dash.
+
+\pagebreak
+
+\subsection{Architecture}
+This is a simplified overview of the different modules in the app as well as the technology used.
+\subsubsection{Back-end}
+The backend-end is the software that runs on the acting server (Raspberry Pi). 
+
+Its job is to collect car data and footage, run analysis on the data and serve it to clients.
+
+The backend is written in TypeScript, running on NodeJS.
+
+\textbf{Modules}
+\begin{itemize}
+	\item Car data reading
+	\item Video reading
+	\item Data storage
+	\begin{itemize}
+		\item Raw data
+		\item Data Analysis
+		\item Video footage
+		\item Other metrics and statistics
+	\end{itemize}
+	\item Data analysis
+	\item Data serving
+	\begin{itemize}
+		\item Over HTTP with GraphQL
+		\item Streaming via WebSockets for data, MJPEG for video feed
+		\item Exports
+	\end{itemize}
+\end{itemize}
+
+\pagebreak
+
+\subsubsection{User Interface}
+There is multiple user interfaces for EcoNav.
+
+\textbf{Mobile}
+
+The mobile interface provides live data reading as well as live driving analysis and tips.
+
+(To be determined) The app will either be a native Android app or a web application.
+
+\textbf{Desktop}
+
+The desktop interface will be provided via a web application, allowing to see more in-depth analysis of the data as well as footage and more. The desktop app is using React with JavaScript.
+
+
+
+
+\end{document}
