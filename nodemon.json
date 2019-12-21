@@ -1,0 +1,7 @@
+{
+  "verbose": false,
+  "ignore": ["server/*.test.ts"],
+  "watch": ["server/*"],
+  "exec": "yarn run dev:server:start",
+  "ext": "ts"
+}
