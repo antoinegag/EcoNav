@@ -13,7 +13,7 @@ from datetime import datetime
 # load the stop_sign detector Haar cascade, then detect stop_sign faces
 # in the input image
 stop_sign_cascade = cv2.CascadeClassifier(
-    '/home/antoine/Development/projects/EcoNav/vision/cascades/stop_sign_classifier.xml')
+    'cascades/stop_sign_classifier.xml')
 
 if(stop_sign_cascade.empty()):
     logging.critical("Unable to load stop sign classifier")
