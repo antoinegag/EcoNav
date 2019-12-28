@@ -2,3 +2,7 @@
 node_modules
 yarn-error.log
 build/
+
+footage
+out
+__pycache__
